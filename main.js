@@ -7,7 +7,7 @@ function main() {
     for (let y = 0; y < 10; y++) {
         for (let x = 0; x < 10; x++) {
             if ((x + y) % 2 == 0)
-                grid.setCell(x, y, 1);
+                grid.set(x, y, 1);
         }
     }
 
@@ -23,7 +23,10 @@ class Grid {
     cells;
     colors;
 
-    setCell(x, y, value) {
+    get(x, y) {
+        return this.cells[y * this.width + x];
+    }
+    set(x, y, value) {
         this.cells[y * this.width + x] = value;
     }
 
@@ -46,9 +49,11 @@ class Grid {
         let ctx = canvas.getContext("2d");
         ctx.save();
 
-        for (let i = 0; i < this.cells.length; i++) {
-            ctx.fillStyle = this.colors[this.cells[i]];
-            ctx.fillRect((i % this.width) * this.cellWidth, (Math.floor(i / this.height)) * this.cellHeight, this.cellWidth, this.cellHeight);
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+                ctx.fillStyle = this.colors[this.get(x, y)];
+                ctx.fillRect(x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight);
+            }
         }
 
         ctx.restore();

@@ -21,11 +21,6 @@ class Snake implements renderable {
 
         this.head = new SnakePart();
 
-        this.head.render = () => {
-            draw.color = 'dodgerblue';
-            draw.Square(80, this.head.pos);
-        }
-
         let next = this.head;
         let current: SnakePart;
         while (--length > 0) {
@@ -132,7 +127,7 @@ class Snake implements renderable {
     }
 }
 
-class SnakePart implements renderable {
+class SnakePart {
     next: SnakePart
 
     pos: Position
@@ -161,13 +156,6 @@ class SnakePart implements renderable {
             }
             this.direction = next.direction;
         }
-    }
-
-    render(): void {
-        draw.color = 'dodgerblue';
-        draw.Square(60, this.pos);
-
-        this.next.render()
     }
 }
 

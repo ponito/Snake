@@ -29,10 +29,6 @@ class Snake implements renderable {
         }
 
         this.tail = current;
-
-        this.movement = setInterval(() => {
-            this.move();
-        }, 250);
     }
 
     blocksTile(pos : [number, number]) {

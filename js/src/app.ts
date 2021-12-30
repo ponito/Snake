@@ -35,6 +35,10 @@ function init() {
 
     window.addEventListener('keydown', onKeydown);
 
+    this.movement = setInterval(() => {
+        GRID.player.move();
+    }, 250);
+
     theatorFit();
 };
 
@@ -53,7 +57,10 @@ function reset() {
     TREASURES = [];
     SNAKES = [];
 
-    init();
+
+    GRID.player = new Snake();
+    SNAKES.push(GRID.player);
+    new Treasure([floor(GRID.width / 2), floor(GRID.height / 2) - 2]);
 }
 
 init();

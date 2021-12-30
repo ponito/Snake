@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel \"js/src\" -d js/build -x \".ts,.js\"",
-    "minify": "uglifyjs js/build/*.js --output js/snake.min.js"
+    "minify": "uglifyjs js/build/*.js --output js/snake.min.js",
+    "fullbuild": "npm run build && npm run minify"
   },
   "repository": {
     "type": "git",

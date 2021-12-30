@@ -11,30 +11,13 @@ const OBJECTS: renderable[] = [];
 const TREASURES: Treasure[] = [];
 const SNAKES: renderable[] = [];
 
-const KeyDownListener = (ev: KeyboardEvent) => {
-    switch (ev.key) {
-        case 'ArrowUp':
-            GRID.player.direction = Direction.UP;
-            break;
-        case 'ArrowLeft':
-            GRID.player.direction = Direction.LEFT;
-            break;
-        case 'ArrowDown':
-            GRID.player.direction = Direction.DOWN;
-            break;
-        case 'ArrowRight':
-            GRID.player.direction = Direction.RIGHT;
-            break;
-    }
-}
-
 function init() {
     GRID.player = new Snake();
 
     SNAKES.push(GRID.player);
     TREASURES.push(new Treasure([floor(GRID.width / 2), floor(GRID.height / 2) + 2]));
 
-    window.addEventListener('keydown', KeyDownListener);
+    window.addEventListener('keydown', onKeydown);
 
     theatorFit();
 };

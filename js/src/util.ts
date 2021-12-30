@@ -22,6 +22,9 @@ const draw = {
         width *= GRID.cell_width / 100;
         height *= GRID.cell_height / 100;
 
+        x += (GRID.cell_width - width) / 2;
+        y += (GRID.cell_height - height) / 2;
+
         if (draw.fill) {
             ctx.fillStyle = draw.color;
             ctx.fillRect(x + dx, y + dy, width, height);

@@ -87,23 +87,23 @@ class Snake implements renderable {
     }
 
     render(): void {
+        let abc;
+
         draw.color = "dodgerblue";
         switch(this.tail.direction) {
             case Direction.UP:
                     draw.Rectangle(50, 75, [this.tail.pos[0] + 0.25, this.tail.pos[1]])
                     break;
-                case Direction.DOWN:
+            case Direction.DOWN:
                     draw.Rectangle(50, 75, [this.tail.pos[0] + 0.25, this.tail.pos[1] + 0.25])
                     break;
-                case Direction.LEFT:
+            case Direction.LEFT:
                     draw.Rectangle(75, 50, [this.tail.pos[0], this.tail.pos[1] + 0.25])
                     break;
-                case Direction.RIGHT:
+            case Direction.RIGHT:
                     draw.Rectangle(75, 50, [this.tail.pos[0] + 0.25, this.tail.pos[1] + 0.25])
                     break;
         }
-
-
 
     }
 }
@@ -162,7 +162,6 @@ class Treasure {
     }
 
     render(): void {
-        draw.color = 'crimson';
-        draw.Square(50, this.pos, [0, 30]);
+        draw.Square(50, this.pos, [0, 30])
     }
 }

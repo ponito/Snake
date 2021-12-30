@@ -11,13 +11,20 @@ const GRID: Grid = {
     cell_width: canvas.width / 15,
     cell_height: canvas.height / 15,
 };
+
+const OBJECTS: renderable[] = [];
 const TREASURES: Treasure[] = [];
 const SNAKES: renderable[] = [];
 
 function init() {
-    fetch("config.json").then(() => {
-
-    })
+    fetch("config.json")
+        .then(r => r.json())
+        .then(config => {
+            GRID.width = config.width | 15;
+            GRID.height = config.height | 15;
+            GRID.cell_width = canvas.width / GRID.width;
+            GRID.cell_height = canvas.height / GRID.height;
+        });
 };
 
 const theatorFit = window.onresize = () => {
@@ -51,11 +58,12 @@ function renderBackground() {
     ctx.stroke();
 };
 
-const renderObjects = () => { };
+const renderObjects = () => {
+    OBJECTS.forEach(o => o.render());
+    TREASURES.forEach(t => t.render());
+};
 
 const renderPlayers = () => SNAKES.forEach(s => s.render());
-
-const renderControls = () => { };
 
 function updateFrames() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -63,7 +71,6 @@ function updateFrames() {
     renderBackground();
     renderObjects();
     renderPlayers();
-    renderControls();
 
     window.requestAnimationFrame(updateFrames);
 }

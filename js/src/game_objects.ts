@@ -77,6 +77,25 @@ class Snake implements renderable {
             case TreasureType.APPLE:
                 this.grow();
                 TREASURES.splice(TREASURES.findIndex((v) => v === t), 1);
+
+                let newPos: [number, number] = [-1, -1];
+                let blocked = true;
+                while (blocked) {
+                    blocked = false;
+                    newPos = [randInt(GRID.width), randInt(GRID.height)];
+
+                    let next = this.tail;
+                    while (next !== null) {
+                        if (next.pos === newPos) {
+                            blocked = true;
+                            next = null;
+                        }
+
+                        next = next.next;
+                    }
+                }
+                new Treasure(newPos, TreasureType.APPLE);
+                break;
         }
     }
 

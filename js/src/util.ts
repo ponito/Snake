@@ -37,7 +37,6 @@ const draw = {
 };
 
 // math
-
 function randInt(max: number, min = 0) {
-    floor((1 - Math.random()) * (max - min + 1)) + min;
+    return floor((1 - Math.random()) * (max - min + 1)) + min;
 }

@@ -2,7 +2,6 @@ const floor = Math.floor;
 
 // functions for drawing in grid boxes
 
-
 const draw = {
     color: 'black',
     fill: true,
@@ -33,5 +32,5 @@ const draw = {
 // math
 
 function randInt(max: number, min = 0) {
-
+    floor(Math.random() * (max - min + 1)) + min
 }

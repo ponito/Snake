@@ -26,16 +26,18 @@ type GlobalsType = {
         cellsizeX: number,
         cellsizeY: number,
     },
-    treasures: Treasure[]
+    player: Snake
 }
 
-const GLOBALS: GlobalsType = { treasures: [] } as GlobalsType;
-let PROPS: renderable[] = [];
-const CHARS: renderable[] = [];
+const GLOBALS: GlobalsType = {} as GlobalsType;
+const TREASURES: Treasure[] = [];
+const PROPS: renderable[] = [];
+const SNAKES: renderable[] = [];
 
 function init() {
     setGridSize(15, 15);
-    CHARS.push(new Snake());
+    GLOBALS.player = new Snake();
+    SNAKES.push(GLOBALS.player);
     PROPS.push(new Treasure([
         floor(GLOBALS.grid.cells_x / 2),
         floor(GLOBALS.grid.cells_y / 2) - 2,
@@ -58,7 +60,7 @@ function renderProps() {
 }
 
 function renderCharacters() {
-    for (const c of CHARS) {
+    for (const c of SNAKES) {
         c.render();
     }
 }

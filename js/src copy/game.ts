@@ -112,8 +112,8 @@ class SnakeHead {
 
     render(): void {
         const [x, y] = this.pos;
-        ctx.fillStyle = 'dodgerblue'
-        ctx.fillRect(
+        _ctx.fillStyle = 'dodgerblue'
+        _ctx.fillRect(
             x * GLOBALS.grid.cellsizeX + GLOBALS.grid.cellsizeX / 10,
             y * GLOBALS.grid.cellsizeY + GLOBALS.grid.cellsizeX / 10,
             GLOBALS.grid.cellsizeX * 0.8,
@@ -150,8 +150,8 @@ class SnakeBody {
 
     render(): void {
         const [x, y] = this.pos;
-        ctx.fillStyle = 'dodgerblue'
-        ctx.fillRect(
+        _ctx.fillStyle = 'dodgerblue'
+        _ctx.fillRect(
             x * GLOBALS.grid.cellsizeX + GLOBALS.grid.cellsizeX / 5,
             y * GLOBALS.grid.cellsizeY + GLOBALS.grid.cellsizeX / 5,
             GLOBALS.grid.cellsizeX * 0.6,
@@ -179,8 +179,8 @@ class Treasure {
 
     render(): void {
         const [x, y] = this.pos;
-        ctx.fillStyle = 'crimson'
-        ctx.fillRect(
+        _ctx.fillStyle = 'crimson'
+        _ctx.fillRect(
             x * GLOBALS.grid.cellsizeX + GLOBALS.grid.cellsizeX / 4,
             y * GLOBALS.grid.cellsizeY + GLOBALS.grid.cellsizeX * 0.3,
             GLOBALS.grid.cellsizeX * 0.5,

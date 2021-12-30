@@ -1,20 +1,16 @@
 function onKeydown(ev: KeyboardEvent) {
     switch (ev.key) {
         case 'ArrowUp':
-            if (GRID.player.nextDirection != Direction.DOWN)
-                GRID.player.nextDirection = Direction.UP;
+            if (GRID.player.nextDirection != Direction.DOWN) { GRID.player.nextDirection = Direction.UP };
             break;
         case 'ArrowLeft':
-            if (GRID.player.nextDirection != Direction.RIGHT)
-                GRID.player.nextDirection = Direction.LEFT;
+            if (GRID.player.nextDirection != Direction.RIGHT) { GRID.player.nextDirection = Direction.LEFT };
             break;
         case 'ArrowDown':
-            if (GRID.player.nextDirection != Direction.UP)
-                GRID.player.nextDirection = Direction.DOWN;
+            if (GRID.player.nextDirection != Direction.UP) { GRID.player.nextDirection = Direction.DOWN };
             break;
         case 'ArrowRight':
-            if (GRID.player.nextDirection != Direction.LEFT)
-                GRID.player.nextDirection = Direction.RIGHT;
+            if (GRID.player.nextDirection != Direction.LEFT) { GRID.player.nextDirection = Direction.RIGHT };
             break;
     }
 }

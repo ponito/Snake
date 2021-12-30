@@ -47,6 +47,7 @@ class Snake implements renderable {
     }
 
     move() {
+        this.direction = this.nextDirection;
         const [x, y] = this.head.pos;
         let newPos: typeof this.head.pos;
 

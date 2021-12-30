@@ -1,20 +1,3 @@
-const GLOBALS: any = {
-    events: {
-        'onFoodEaten': []
-    },
-    addEventListener(event: string, listener: (ev: {}) => any) {
-        const listeners = GLOBALS.events[event];
-        if (listeners) {
-            listeners.push(listener);
-        }
-    },
-    dispatchEvent(event: string, ev: {}) {
-        const listeners = GLOBALS.events[event];
-        for (const l of listeners) {
-            l(ev);
-        }
-    }
-};
 const GRID: Grid = {
     width: 15,
     height: 15,

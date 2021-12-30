@@ -76,7 +76,8 @@ class Snake implements renderable {
         switch (t.type) {
             case TreasureType.APPLE:
                 this.grow();
-                TREASURES.splice(TREASURES.findIndex((v) => v === t), 1);
+                const i = TREASURES.findIndex((v) => v === t);
+                TREASURES.splice(i, i + 1);
         }
     }
 

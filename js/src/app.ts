@@ -6,9 +6,9 @@ const GRID: Grid = {
     player: null,
 };
 
-const OBJECTS: renderable[] = [];
-const TREASURES: Treasure[] = [];
-const SNAKES: renderable[] = [];
+var OBJECTS: renderable[] = [];
+var TREASURES: Treasure[] = [];
+var SNAKES: renderable[] = [];
 
 function init() {
     GRID.player = new Snake();
@@ -17,6 +17,10 @@ function init() {
     new Treasure([floor(GRID.width / 2), floor(GRID.height / 2) - 2]);
 
     window.addEventListener('keydown', onKeydown);
+
+    this.movement = setInterval(() => {
+        GRID.player.move();
+    }, 250);
 
     theatorFit();
 };
@@ -29,6 +33,17 @@ function updateFrames() {
     renderPlayers();
 
     window.requestAnimationFrame(updateFrames);
+}
+
+function reset() {
+    OBJECTS = [];
+    TREASURES = [];
+    SNAKES = [];
+
+
+    GRID.player = new Snake();
+    SNAKES.push(GRID.player);
+    new Treasure([floor(GRID.width / 2), floor(GRID.height / 2) - 2]);
 }
 
 init();

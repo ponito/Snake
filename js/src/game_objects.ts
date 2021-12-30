@@ -29,10 +29,20 @@ class Snake implements renderable {
         }
 
         this.tail = current;
+    }
 
-        this.movement = setInterval(() => {
-            this.move();
-        }, 500);
+    blocksTile(pos : [number, number]) {
+        let next = this.tail;
+        while (next !== null) {
+            if (next.pos[0] == pos[0] && next.pos[1] == pos[1]) {
+                next = null;
+                return true;
+            }
+
+            next = next.next;
+        }
+
+        return false;
     }
 
     move() {
@@ -59,6 +69,10 @@ class Snake implements renderable {
             (newPos[1] + GRID.height) % GRID.height
         ];
 
+        if (this.blocksTile(newPos)) {
+            reset();
+        }
+
         const newHead = this.tail;
         this.tail = newHead.next;
         newHead.next = null;
@@ -78,6 +92,13 @@ class Snake implements renderable {
                 this.grow();
                 const i = TREASURES.findIndex((v) => v === t);
                 TREASURES.splice(i, i + 1);
+
+                let newPos: [number, number] = [randInt(GRID.width - 1), randInt(GRID.height - 1)];
+                while (this.blocksTile(newPos)) {
+                    newPos = [randInt(GRID.width - 1), randInt(GRID.height - 1)];
+                }
+                new Treasure(newPos, TreasureType.APPLE);
+                break;
         }
     }
 
@@ -93,22 +114,55 @@ class Snake implements renderable {
         draw.color = "dodgerblue";
         switch(this.tail.next.direction) {
             case Direction.UP:
-                    draw.Rectangle(50, 75, [this.tail.pos[0], this.tail.pos[1] - 0.25]);
+                    draw.Rectangle(75, 87.5, [this.tail.pos[0], this.tail.pos[1] - 0.125]);
                     break;
             case Direction.DOWN:
-                    draw.Rectangle(50, 75, [this.tail.pos[0], this.tail.pos[1] + 0.25])
+                    draw.Rectangle(75, 87.5, [this.tail.pos[0], this.tail.pos[1] + 0.125])
                     break;
             case Direction.LEFT:
-                    draw.Rectangle(75, 50, [this.tail.pos[0] - 0.25, this.tail.pos[1]])
+                    draw.Rectangle(87.5, 75, [this.tail.pos[0] - 0.125, this.tail.pos[1]])
                     break;
             case Direction.RIGHT:
-                    draw.Rectangle(75, 50, [this.tail.pos[0] + 0.25, this.tail.pos[1]])
+                    draw.Rectangle(87.5, 75, [this.tail.pos[0] + 0.125, this.tail.pos[1]])
                     break;
         }
 
         let next = this.tail.next;
         while(next !== this.head) {
-            draw.Rectangle(100, 100, next.pos);
+            if (next.direction === next.next.direction) {
+                switch(next.next.direction) {
+                    case Direction.UP:
+                            draw.Rectangle(75, 100, [next.pos[0], next.pos[1]]);
+                            break;
+                    case Direction.DOWN:
+                            draw.Rectangle(75, 100, [next.pos[0], next.pos[1]])
+                            break;
+                    case Direction.LEFT:
+                            draw.Rectangle(100, 75, [next.pos[0], next.pos[1]])
+                            break;
+                    case Direction.RIGHT:
+                            draw.Rectangle(100, 75, [next.pos[0], next.pos[1]])
+                            break;
+                }
+            }
+            else {
+                if ((next.direction === Direction.UP && next.next.direction === Direction.LEFT) ||
+                (next.direction === Direction.RIGHT && next.next.direction === Direction.DOWN)) {
+                    // arc left to down
+                }
+                else if ((next.direction === Direction.UP && next.next.direction === Direction.RIGHT) ||
+                (next.direction === Direction.LEFT && next.next.direction === Direction.DOWN)) {
+                    // arc down to right
+                }
+                else if ((next.direction === Direction.DOWN && next.next.direction === Direction.RIGHT) ||
+                (next.direction === Direction.LEFT && next.next.direction === Direction.UP)) {
+                    // arc right to up
+                }
+                else if ((next.direction === Direction.DOWN && next.next.direction === Direction.LEFT) ||
+                (next.direction === Direction.RIGHT && next.next.direction === Direction.UP)) {
+                    // arc up to left
+                }
+            }
 
             next = next.next;
         }
@@ -116,16 +170,16 @@ class Snake implements renderable {
 
         switch(this.head.direction) {
             case Direction.UP:
-                    draw.Rectangle(50, 75, [this.head.pos[0], this.head.pos[1] + 0.25]);
+                    draw.Rectangle(75, 87.5, [this.head.pos[0], this.head.pos[1] + 0.125]);
                     break;
             case Direction.DOWN:
-                    draw.Rectangle(50, 75, [this.head.pos[0], this.head.pos[1] - 0.25])
+                    draw.Rectangle(75, 87.5, [this.head.pos[0], this.head.pos[1] - 0.125])
                     break;
             case Direction.LEFT:
-                    draw.Rectangle(75, 50, [this.head.pos[0] + 0.25, this.head.pos[1]])
+                    draw.Rectangle(87.5, 75, [this.head.pos[0] + 0.125, this.head.pos[1]])
                     break;
             case Direction.RIGHT:
-                    draw.Rectangle(75, 50, [this.head.pos[0] - 0.25, this.head.pos[1]])
+                    draw.Rectangle(87.5, 75, [this.head.pos[0] - 0.125, this.head.pos[1]])
                     break;
         }
     }

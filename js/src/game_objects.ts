@@ -13,6 +13,7 @@ class Snake implements renderable {
     tail: SnakePart
 
     direction: Direction = Direction.UP;
+    nextDirection: Direction = this.direction;
     movement: any;
 
     constructor(length = 4, score = 0) {
@@ -46,6 +47,8 @@ class Snake implements renderable {
     }
 
     move() {
+        if (!isOppositeDirection(this.direction, this.nextDirection))
+            this.direction = this.nextDirection;
         const [x, y] = this.head.pos;
         let newPos: typeof this.head.pos;
 

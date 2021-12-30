@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel \"js/src\" -d js/build -x \".ts,.js\"",
+    "build": "babel \"js/src\" -d js/build -x \".ts,.js\" --watch",
     "minify": "uglifyjs js/build/*.js --output js/snake.min.js"
   },
   "repository": {

@@ -9,9 +9,13 @@ enum Direction {
 
 class Snake {
     head: SnakeHead
+    movement: number
 
     constructor() {
         this.head = new SnakeHead();
+        this.movement = setInterval(() => {
+            this.head.move(Direction.UP);
+        }, 1000);
     }
 
     render() {
@@ -33,7 +37,8 @@ class SnakeHead {
     direction: Direction = Direction.UP
 
     constructor() {
-        let next: SnakeHead | SnakeBody = this.neck = new SnakeBody(this);
+        let next: SnakeHead | SnakeBody = new SnakeBody(this);
+        this.neck = next;
         let current: SnakeBody;
         let length = this.length;
         while (--length > 0) {
@@ -48,10 +53,10 @@ class SnakeHead {
         let newPos: typeof this.pos;
         switch (direction) {
             case Direction.UP:
-                newPos = [x, y + 1];
+                newPos = [x, y - 1];
                 break;
             case Direction.DOWN:
-                newPos = [x, y - 1];
+                newPos = [x, y + 1];
                 break;
             case Direction.LEFT:
                 newPos = [x - 1, y];
@@ -60,11 +65,17 @@ class SnakeHead {
                 newPos = [x + 1, y];
                 break;
         }
-        newPos = [newPos[0] % GLOBALS.grid.cells_x, newPos[1] % GLOBALS.grid.cells_y];
-        this.neck = this.tail;
-        this.tail = this.neck.next as SnakeBody;
-        this.neck.next = this;
-        this.neck.pos = this.pos;
+        newPos = [
+            (newPos[0] + GLOBALS.grid.cells_x) % GLOBALS.grid.cells_x,
+            (newPos[1] + GLOBALS.grid.cells_y) % GLOBALS.grid.cells_y
+        ];
+        const newNeck = this.tail;
+        this.tail = newNeck.next as SnakeBody;
+        this.neck.next = newNeck;
+        this.neck = newNeck;
+        newNeck.next = this;
+        newNeck.pos = this.pos;
+
         this.pos = newPos;
 
         const t = GLOBALS.treasures.find(t => t.pos == newPos)

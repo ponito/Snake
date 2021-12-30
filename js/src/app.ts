@@ -6,9 +6,9 @@ const GRID: Grid = {
     player: null,
 };
 
-var OBJECTS: renderable[] = [];
-var TREASURES: Treasure[] = [];
-var SNAKES: renderable[] = [];
+let OBJECTS: renderable[] = [];
+let TREASURES: Treasure[] = [];
+let SNAKES: renderable[] = [];
 
 function init() {
     GRID.player = new Snake();

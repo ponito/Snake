@@ -5,7 +5,6 @@ const aspectRatio = canvasDims.height / canvasDims.width;
 
 const SHARED_STATE = {};
 const GRID: Grid = {
-    // TODO configuration
     width: 15,
     height: 15,
     cell_width: canvas.width / 15,

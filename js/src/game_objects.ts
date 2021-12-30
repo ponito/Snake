@@ -32,7 +32,7 @@ class Snake implements renderable {
 
         this.movement = setInterval(() => {
             this.move();
-        }, 500);
+        }, 250);
     }
 
     blocksTile(pos : [number, number]) {

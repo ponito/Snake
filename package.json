@@ -1,0 +1,25 @@
+{
+  "name": "web_snake",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel \"js/src\" -d js/build -x \".ts,.js\"",
+    "minify": "uglifyjs js/build/*.js --output js/snake.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ponito/Snake.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/ponito/Snake/issues"
+  },
+  "homepage": "https://github.com/ponito/Snake#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5",
+    "uglify-js": "^3.14.5"
+  }
+}

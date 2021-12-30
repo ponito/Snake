@@ -78,7 +78,7 @@ class SnakeHead {
 
         this.pos = newPos;
 
-        const t = GLOBALS.treasures.find(t => t.pos == newPos)
+        const t = GLOBALS.treasures.find(t => t.pos[0] == newPos[0] && t.pos[1] == newPos[1])
         if (t) this.consume(t);
 
         this.neck.direction = this.direction;
@@ -89,7 +89,8 @@ class SnakeHead {
         switch (t.type) {
             case 'apple':
                 this.grow();
-                break;
+                const i = PROPS.findIndex((v) => v === t);
+                PROPS = PROPS.filter((_, j) => j != i);
         }
     }
 

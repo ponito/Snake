@@ -30,7 +30,7 @@ type GlobalsType = {
 }
 
 const GLOBALS: GlobalsType = { treasures: [] } as GlobalsType;
-const PROPS: renderable[] = [];
+let PROPS: renderable[] = [];
 const CHARS: renderable[] = [];
 
 function init() {

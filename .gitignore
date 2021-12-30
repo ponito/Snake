@@ -1,0 +1,7 @@
+.vscode/
+.vs/
+
+js/build/
+js/*.min.js
+
+node_modules

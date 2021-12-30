@@ -1,0 +1,17 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: black;
+}
+
+#snake-game {
+  background-color: rgb(110, 240, 110);
+  box-sizing: border-box;
+  display: block;
+  margin: auto;
+  padding: 0;
+  position: relative;
+  top: initial;
+}

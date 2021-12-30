@@ -87,7 +87,6 @@ class Snake implements renderable {
                     let next = this.tail;
                     while (next !== null) {
                         if (next.pos[0] == newPos[0] && next.pos[1] == newPos[1]) {
-                            console.log("blocked");
                             blocked = true;
                             next = null;
                             break;

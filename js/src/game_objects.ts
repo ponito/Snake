@@ -145,6 +145,7 @@ class Treasure {
     }
 
     render(): void {
-        draw.Square(50, this.pos, [0, 30])
+        draw.color = 'crimson';
+        draw.Square(50, this.pos, [0, 30]);
     }
 }

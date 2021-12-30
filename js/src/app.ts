@@ -19,6 +19,11 @@ function init() {
             GRID.cell_width = canvas.width / GRID.width;
             GRID.cell_height = canvas.height / GRID.height;
         });
+
+    SNAKES.push(new Snake());
+    TREASURES.push(new Treasure([floor(GRID.width / 2), floor(GRID.height / 2) + 2]));
+
+    theatorFit();
 };
 
 function updateFrames() {

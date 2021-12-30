@@ -30,11 +30,6 @@ interface SnakeGameEventMap {
     'playerdied': PlayerDeathEvent,
 }
 
-interface SnakeGameEventListenerMap {
-    'atefood': SnakeGameEventListener<AteFoodEvent>[],
-    'playerdied': SnakeGameEventListener<PlayerDeathEvent>[],
-}
-
 interface SnakeGameEventListener<T extends SnakeGameEvent> {
     (ev: T): any
 }

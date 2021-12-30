@@ -1,3 +1,10 @@
+declare enum Direction {
+    UP = 'up',
+    DOWN = 'down',
+    LEFT = 'left',
+    RIGHT = 'right',
+}
+
 class Snake implements renderable {
     length: number
     score: number
@@ -125,6 +132,9 @@ class SnakePart implements renderable {
     }
 }
 
+enum TreasureType {
+    APPLE = 'apple'
+}
 class Treasure {
     type = TreasureType.APPLE
 

@@ -41,12 +41,3 @@ const draw = {
 function randInt(max: number, min = 0) {
     return floor((1 - Math.random()) * (max - min + 1)) + min;
 }
-
-// directions
-
-function isOppositeDirection(d1: Direction, d2: Direction) {
-    return (d1 == Direction.UP && d2 == Direction.DOWN) ||
-           (d1 == Direction.DOWN && d2 == Direction.UP) ||
-           (d1 == Direction.LEFT && d2 == Direction.RIGHT) ||
-           (d1 == Direction.RIGHT && d2 == Direction.LEFT)
-}

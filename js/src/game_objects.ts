@@ -55,8 +55,8 @@ class Snake implements renderable {
         }
 
         newPos = [
-            (newPos[0] + GRID.cell_width) % GRID.cell_width,
-            (newPos[1] + GRID.cell_height) % GRID.cell_height
+            (newPos[0] + GRID.width) % GRID.width,
+            (newPos[1] + GRID.height) % GRID.height
         ];
 
         const newHead = this.tail;

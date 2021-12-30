@@ -23,11 +23,10 @@ const theatorFit = window.onresize = () => {
 function renderBackground() {
     draw.color = 'seagreen';
     draw.fill = false;
-    for (let x = 0; x < GRID.cell_width; x++) {
-        for (let y = 0; y < GRID.cell_height; y++) {
+    for (let x = 0; x < GRID.width; x++) {
+        for (let y = 0; y < GRID.height; y++) {
             // Use image?
-            draw.Rectangle(GRID.cell_width, GRID.cell_height,
-                [x * GRID.cell_width, y * GRID.cell_height])
+            draw.Square(100, [x, y])
         }
     }
     draw.fill = true;

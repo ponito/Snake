@@ -9,9 +9,13 @@ enum Direction {
 
 class Snake {
     head: SnakeHead
+    movement: number
 
     constructor() {
         this.head = new SnakeHead();
+        this.movement = setInterval(() => {
+            this.head.move(this.head.direction);
+        }, 0.5);
     }
 
     render() {
@@ -146,17 +150,18 @@ class Treasure {
         this.type = type;
 
         this.pos = pos;
+
+        GLOBALS.treasures.push(this);
     }
 
     render(): void {
-
+        const [x, y] = this.pos;
+        ctx.fillStyle = 'crimson'
+        ctx.fillRect(
+            x * GLOBALS.grid.cellsizeX + GLOBALS.grid.cellsizeX / 4,
+            y * GLOBALS.grid.cellsizeY + GLOBALS.grid.cellsizeX * 0.3,
+            GLOBALS.grid.cellsizeX * 0.5,
+            GLOBALS.grid.cellsizeY * 0.5
+        );
     }
-}
-
-function setGridSize(cells_x: number, cells_y: number) {
-    GLOBALS.grid = {
-        cells_x, cells_y,
-        cellsizeX: canvas.width / cells_x,
-        cellsizeY: canvas.height / cells_y,
-    };
 }

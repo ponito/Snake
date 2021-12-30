@@ -15,3 +15,11 @@ function Grid() {
     }
     ctx.stroke();
 }
+
+function setGridSize(cells_x: number, cells_y: number) {
+    GLOBALS.grid = {
+        cells_x, cells_y,
+        cellsizeX: canvas.width / cells_x,
+        cellsizeY: canvas.height / cells_y,
+    };
+}

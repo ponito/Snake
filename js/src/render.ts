@@ -29,26 +29,32 @@ type GlobalsType = {
     treasures: Treasure[]
 }
 
-const GLOBALS: GlobalsType = {} as GlobalsType;
+const GLOBALS: GlobalsType = { treasures: [] } as GlobalsType;
 const PROPS: renderable[] = [];
 const CHARS: renderable[] = [];
 
 function init() {
-    setGridSize(9, 9);
+    setGridSize(15, 15);
     CHARS.push(new Snake());
+    PROPS.push(new Treasure([
+        floor(GLOBALS.grid.cells_x / 2),
+        floor(GLOBALS.grid.cells_y / 2) - 2,
+    ]));
     theatorFit();
+}
+interface renderable {
+    render(): void
 }
 
 function renderBackground() {
     Grid();
 }
 
-interface renderable {
-    render(): void
-}
 
 function renderProps() {
-
+    for (const p of PROPS) {
+        p.render();
+    }
 }
 
 function renderCharacters() {

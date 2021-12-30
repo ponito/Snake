@@ -16,7 +16,7 @@ class Snake implements renderable {
     movement: any;
 
     constructor(length = 4, score = 0) {
-        this.length = length;
+        this.length = Math.min(3, length);
         this.score = score;
 
         this.head = new SnakePart();

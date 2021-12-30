@@ -11,21 +11,25 @@ const draw = {
     },
 
     Rectangle: (width: number, height: number, pos: Position, offset: [number, number] = [0, 0]) => {
-        const rect = draw.fill ? ctx.fillRect : ctx.strokeRect;
-        if (draw.fill) { ctx.fillStyle = draw.color }
-        else { ctx.strokeStyle = draw.color };
-
         let [x, y] = pos;
-        x *= GRID.cell_width
-        y *= GRID.cell_height
+        x *= GRID.cell_width;
+        y *= GRID.cell_height;
 
         let [dx, dy] = offset;
-        dx *= GRID.cell_width / 100
-        dy *= GRID.cell_height / 100
+        dx *= GRID.cell_width / 100;
+        dy *= GRID.cell_height / 100;
 
-        width *= GRID.cell_width / 100
-        height *= GRID.cell_height / 100
-        rect(x + dx, y + dy, width, height);
+        width *= GRID.cell_width / 100;
+        height *= GRID.cell_height / 100;
+
+        if (draw.fill) {
+            ctx.fillStyle = draw.color;
+            ctx.fillRect(x + dx, y + dy, width, height);
+        }
+        else {
+            ctx.strokeStyle = draw.color;
+            ctx.strokeRect(x + dx, y + dy, width, height);
+        }
     },
 };
 

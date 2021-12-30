@@ -1,4 +1,4 @@
-declare enum Direction {
+enum Direction {
     UP = 'up',
     DOWN = 'down',
     LEFT = 'left',

@@ -12,7 +12,7 @@ class Snake implements renderable {
     head: SnakePart
     tail: SnakePart
 
-    direction: Direction;
+    direction: Direction = Direction.UP;
     movement: any;
 
     constructor(length = 4, score = 0) {
@@ -20,11 +20,6 @@ class Snake implements renderable {
         this.score = score;
 
         this.head = new SnakePart();
-
-        this.head.render = () => {
-            draw.color = 'dodgerblue';
-            draw.Square(80, this.head.pos);
-        };
 
         let next = this.head;
         let current: SnakePart;
@@ -36,15 +31,15 @@ class Snake implements renderable {
         this.tail = current;
 
         this.movement = setInterval(() => {
-            this.move(Direction.UP);
+            this.move();
         }, 500);
     }
 
-    move(direction: Direction) {
+    move() {
         const [x, y] = this.head.pos;
         let newPos: typeof this.head.pos;
 
-        switch (direction) {
+        switch (this.direction) {
             case Direction.UP:
                 newPos = [x, y - 1];
                 break;
@@ -69,6 +64,7 @@ class Snake implements renderable {
         newHead.next = null;
         this.head.next = newHead;
         this.head = newHead;
+        newHead.pos = newPos;
 
         const t = TREASURES.find(t => t.pos[0] == newPos[0] && t.pos[1] == newPos[1])
         if (t) this.consume(t);

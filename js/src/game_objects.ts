@@ -148,18 +148,22 @@ class Snake implements renderable {
                 if ((next.direction === Direction.UP && next.next.direction === Direction.LEFT) ||
                 (next.direction === Direction.RIGHT && next.next.direction === Direction.DOWN)) {
                     // arc left to down
+                    draw.Rectangle(75, 75, [next.pos[0], next.pos[1]]);
                 }
                 else if ((next.direction === Direction.UP && next.next.direction === Direction.RIGHT) ||
                 (next.direction === Direction.LEFT && next.next.direction === Direction.DOWN)) {
                     // arc down to right
+                    draw.Rectangle(75, 75, [next.pos[0], next.pos[1]]);
                 }
                 else if ((next.direction === Direction.DOWN && next.next.direction === Direction.RIGHT) ||
                 (next.direction === Direction.LEFT && next.next.direction === Direction.UP)) {
                     // arc right to up
+                    draw.Rectangle(75, 75, [next.pos[0], next.pos[1]]);
                 }
                 else if ((next.direction === Direction.DOWN && next.next.direction === Direction.LEFT) ||
                 (next.direction === Direction.RIGHT && next.next.direction === Direction.UP)) {
                     // arc up to left
+                    draw.Rectangle(75, 75, [next.pos[0], next.pos[1]]);
                 }
             }
 
@@ -170,15 +174,31 @@ class Snake implements renderable {
         switch(this.head.direction) {
             case Direction.UP:
                     draw.Rectangle(75, 87.5, [this.head.pos[0], this.head.pos[1] + 0.125]);
+                    draw.color = "black";
+                    draw.Rectangle(10, 10, [this.head.pos[0] - 0.375 / 2, this.head.pos[1]]);
+                    draw.Rectangle(10, 10, [this.head.pos[0] + 0.375 / 2, this.head.pos[1]]);
+                    draw.color = "dodgerblue";
                     break;
             case Direction.DOWN:
                     draw.Rectangle(75, 87.5, [this.head.pos[0], this.head.pos[1] - 0.125])
+                    draw.color = "black";
+                    draw.Rectangle(10, 10, [this.head.pos[0] - 0.375 / 2, this.head.pos[1]]);
+                    draw.Rectangle(10, 10, [this.head.pos[0] + 0.375 / 2, this.head.pos[1]]);
+                    draw.color = "dodgerblue";
                     break;
             case Direction.LEFT:
                     draw.Rectangle(87.5, 75, [this.head.pos[0] + 0.125, this.head.pos[1]])
+                    draw.color = "black";
+                    draw.Rectangle(10, 10, [this.head.pos[0], this.head.pos[1] - 0.375 / 2]);
+                    draw.Rectangle(10, 10, [this.head.pos[0], this.head.pos[1] + 0.375 / 2]);
+                    draw.color = "dodgerblue";
                     break;
             case Direction.RIGHT:
                     draw.Rectangle(87.5, 75, [this.head.pos[0] - 0.125, this.head.pos[1]])
+                    draw.color = "black";
+                    draw.Rectangle(10, 10, [this.head.pos[0], this.head.pos[1] - 0.375 / 2]);
+                    draw.Rectangle(10, 10, [this.head.pos[0], this.head.pos[1] + 0.375 / 2]);
+                    draw.color = "dodgerblue";
                     break;
         }
     }

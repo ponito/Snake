@@ -9,13 +9,9 @@ enum Direction {
 
 class Snake {
     head: SnakeHead
-    movement: number
 
     constructor() {
         this.head = new SnakeHead();
-        this.movement = setInterval(() => {
-            this.head.move(this.head.direction);
-        }, 0.5);
     }
 
     render() {
@@ -64,12 +60,18 @@ class SnakeHead {
                 newPos = [x + 1, y];
                 break;
         }
-        const t = GLOBALS.treasures.find(t => t.pos == newPos)
-        if (t) this.consume(t);
-        this.direction = direction;
+        newPos = [newPos[0] % GLOBALS.grid.cells_x, newPos[1] % GLOBALS.grid.cells_y];
+        this.neck = this.tail;
+        this.tail = this.neck.next as SnakeBody;
+        this.neck.next = this;
+        this.neck.pos = this.pos;
         this.pos = newPos;
 
-        // TODO (check out of bounds) Lose game when leaving grid
+        const t = GLOBALS.treasures.find(t => t.pos == newPos)
+        if (t) this.consume(t);
+
+        this.neck.direction = this.direction;
+        this.direction = direction;
     }
 
     consume(t: Treasure) {
@@ -82,7 +84,9 @@ class SnakeHead {
 
     grow(size = 1) {
         while (size > 0) {
-            this.neck = this.neck.next = new SnakeBody(this);
+            const newTail = new SnakeBody(this);
+            newTail.next = this.tail;
+            this.tail = newTail;
             size -= 1;
         }
     }

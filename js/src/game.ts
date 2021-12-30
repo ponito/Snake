@@ -91,7 +91,6 @@ class SnakeHead {
                 this.grow();
                 const i = PROPS.findIndex((v) => v === t);
                 PROPS = PROPS.filter((_, j) => j != i);
-                console.log(PROPS);
         }
     }
 

@@ -56,43 +56,6 @@ class SnakeHead {
         this.tail = current;
     }
 
-    move(direction: Direction) {
-        const [x, y] = this.pos;
-        let newPos: typeof this.pos;
-        switch (direction) {
-            case Direction.UP:
-                newPos = [x, y - 1];
-                break;
-            case Direction.DOWN:
-                newPos = [x, y + 1];
-                break;
-            case Direction.LEFT:
-                newPos = [x - 1, y];
-                break;
-            case Direction.RIGHT:
-                newPos = [x + 1, y];
-                break;
-        }
-        newPos = [
-            (newPos[0] + GLOBALS.grid.cells_x) % GLOBALS.grid.cells_x,
-            (newPos[1] + GLOBALS.grid.cells_y) % GLOBALS.grid.cells_y
-        ];
-        const newNeck = this.tail;
-        this.tail = newNeck.next as SnakeBody;
-        this.neck.next = newNeck;
-        this.neck = newNeck;
-        newNeck.next = this;
-        newNeck.pos = this.pos;
-
-        this.pos = newPos;
-
-        const t = TREASURES.find(t => t.pos[0] == newPos[0] && t.pos[1] == newPos[1])
-        if (t) this.consume(t);
-
-        this.neck.direction = this.direction;
-        this.direction = direction;
-    }
-
     consume(t: Treasure) {
         switch (t.type) {
             case 'apple':
@@ -112,8 +75,8 @@ class SnakeHead {
 
     render(): void {
         const [x, y] = this.pos;
-        _ctx.fillStyle = 'dodgerblue'
-        _ctx.fillRect(
+        ctx.fillStyle = 'dodgerblue'
+        ctx.fillRect(
             x * GLOBALS.grid.cellsizeX + GLOBALS.grid.cellsizeX / 10,
             y * GLOBALS.grid.cellsizeY + GLOBALS.grid.cellsizeX / 10,
             GLOBALS.grid.cellsizeX * 0.8,
@@ -150,8 +113,8 @@ class SnakeBody {
 
     render(): void {
         const [x, y] = this.pos;
-        _ctx.fillStyle = 'dodgerblue'
-        _ctx.fillRect(
+        ctx.fillStyle = 'dodgerblue'
+        ctx.fillRect(
             x * GLOBALS.grid.cellsizeX + GLOBALS.grid.cellsizeX / 5,
             y * GLOBALS.grid.cellsizeY + GLOBALS.grid.cellsizeX / 5,
             GLOBALS.grid.cellsizeX * 0.6,
@@ -179,8 +142,8 @@ class Treasure {
 
     render(): void {
         const [x, y] = this.pos;
-        _ctx.fillStyle = 'crimson'
-        _ctx.fillRect(
+        ctx.fillStyle = 'crimson'
+        ctx.fillRect(
             x * GLOBALS.grid.cellsizeX + GLOBALS.grid.cellsizeX / 4,
             y * GLOBALS.grid.cellsizeY + GLOBALS.grid.cellsizeX * 0.3,
             GLOBALS.grid.cellsizeX * 0.5,

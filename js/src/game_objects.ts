@@ -5,13 +5,15 @@ class Snake implements renderable {
     head: SnakePart
     tail: SnakePart
 
-    movement: number;
+    direction: Direction;
+    movement: any;
 
     constructor(length = 4, score = 0) {
         this.length = length;
         this.score = score;
 
         this.head = new SnakePart();
+
         this.head.render = () => {
             draw.color = 'dodgerblue';
             draw.Square(80, this.head.pos);
@@ -27,8 +29,58 @@ class Snake implements renderable {
         this.tail = current;
 
         this.movement = setInterval(() => {
-            // ...
+            this.move(Direction.UP);
         }, 500);
+    }
+
+    move(direction: Direction) {
+        const [x, y] = this.head.pos;
+        let newPos: typeof this.head.pos;
+
+        switch (direction) {
+            case Direction.UP:
+                newPos = [x, y - 1];
+                break;
+            case Direction.DOWN:
+                newPos = [x, y + 1];
+                break;
+            case Direction.LEFT:
+                newPos = [x - 1, y];
+                break;
+            case Direction.RIGHT:
+                newPos = [x + 1, y];
+                break;
+        }
+
+        newPos = [
+            (newPos[0] + GRID.cell_width) % GRID.cell_width,
+            (newPos[1] + GRID.cell_height) % GRID.cell_height
+        ];
+
+        const newHead = this.tail;
+        this.tail = newHead.next;
+        newHead.next = null;
+        this.head.next = newHead;
+        this.head = newHead;
+
+        const t = TREASURES.find(t => t.pos[0] == newPos[0] && t.pos[1] == newPos[1])
+        if (t) this.consume(t);
+    }
+
+    consume(t: Treasure) {
+        switch (t.type) {
+            case TreasureType.APPLE:
+                this.grow();
+                TREASURES.splice(TREASURES.findIndex((v) => v === t), 1);
+        }
+    }
+
+    grow(addedParts = 1) {
+        while (addedParts > 0) {
+            const newTail = new SnakePart(this.tail);
+            this.tail = newTail;
+            addedParts -= 1;
+        }
     }
 
     render(): void {
@@ -68,7 +120,8 @@ class SnakePart implements renderable {
     }
 
     render(): void {
-        throw new Error("Method not implemented.");
+        draw.color = 'dodgerblue';
+        draw.Square(60, this.pos);
     }
 }
 

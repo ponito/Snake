@@ -5,7 +5,7 @@ enum Direction {
     DOWN = 'down',
     LEFT = 'left',
     RIGHT = 'right',
-}
+};
 
 class Snake {
     head: SnakeHead
@@ -39,7 +39,6 @@ class SnakeHead {
         while (--length > 0) {
             current = new SnakeBody(next);
             next = current;
-            console.log(`l: ${length}`)
         }
         this.tail = current;
     }
@@ -145,6 +144,8 @@ class Treasure {
 
     constructor(pos: typeof Treasure.prototype.pos, type: TreasureType = 'apple') {
         this.type = type;
+
+        this.pos = pos;
     }
 
     render(): void {

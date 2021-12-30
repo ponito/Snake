@@ -66,6 +66,8 @@ class Snake implements renderable {
         this.head = newHead;
         newHead.pos = newPos;
 
+        newHead.direction = this.direction;
+
         const t = TREASURES.find(t => t.pos[0] == newPos[0] && t.pos[1] == newPos[1])
         if (t) this.consume(t);
     }
@@ -88,18 +90,18 @@ class Snake implements renderable {
 
     render(): void {
         draw.color = "dodgerblue";
-        switch(this.tail.direction) {
+        switch(this.tail.next.direction) {
             case Direction.UP:
-                    draw.Rectangle(50, 75, [this.tail.pos[0] + 0.25, this.tail.pos[1]])
+                    draw.Rectangle(50, 75, [this.tail.pos[0], this.tail.pos[1] - 0.25]);
                     break;
             case Direction.DOWN:
-                    draw.Rectangle(50, 75, [this.tail.pos[0] + 0.25, this.tail.pos[1] + 0.25])
+                    draw.Rectangle(50, 75, [this.tail.pos[0], this.tail.pos[1] + 0.25])
                     break;
             case Direction.LEFT:
-                    draw.Rectangle(75, 50, [this.tail.pos[0], this.tail.pos[1] + 0.25])
+                    draw.Rectangle(75, 50, [this.tail.pos[0] - 0.25, this.tail.pos[1]])
                     break;
             case Direction.RIGHT:
-                    draw.Rectangle(75, 50, [this.tail.pos[0] + 0.25, this.tail.pos[1] + 0.25])
+                    draw.Rectangle(75, 50, [this.tail.pos[0] + 0.25, this.tail.pos[1]])
                     break;
         }
 
@@ -110,18 +112,19 @@ class Snake implements renderable {
             next = next.next;
         }
 
+
         switch(this.head.direction) {
             case Direction.UP:
-                    draw.Rectangle(50, 75, [this.head.pos[0] + 0.25, this.head.pos[1] + 0.25]);
+                    draw.Rectangle(50, 75, [this.head.pos[0], this.head.pos[1] + 0.25]);
                     break;
             case Direction.DOWN:
-                    draw.Rectangle(50, 75, [this.head.pos[0] + 0.25, this.head.pos[1]])
+                    draw.Rectangle(50, 75, [this.head.pos[0], this.head.pos[1] - 0.25])
                     break;
             case Direction.LEFT:
-                    draw.Rectangle(75, 50, [this.head.pos[0] + 0.25, this.head.pos[1] + 0.25])
+                    draw.Rectangle(75, 50, [this.head.pos[0] + 0.25, this.head.pos[1]])
                     break;
             case Direction.RIGHT:
-                    draw.Rectangle(75, 50, [this.head.pos[0], this.head.pos[1] + 0.25])
+                    draw.Rectangle(75, 50, [this.head.pos[0] - 0.25, this.head.pos[1]])
                     break;
         }
     }

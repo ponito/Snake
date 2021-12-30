@@ -35,6 +35,20 @@ class Snake implements renderable {
         }, 500);
     }
 
+    blocksTile(pos : [number, number]) {
+        let next = this.tail;
+        while (next !== null) {
+            if (next.pos[0] == pos[0] && next.pos[1] == pos[1]) {
+                next = null;
+                return true;
+            }
+
+            next = next.next;
+        }
+
+        return false;
+    }
+
     move() {
         const [x, y] = this.head.pos;
         let newPos: typeof this.head.pos;
@@ -59,6 +73,10 @@ class Snake implements renderable {
             (newPos[1] + GRID.height) % GRID.height
         ];
 
+        if (this.blocksTile(newPos)) {
+            reset();
+        }
+
         const newHead = this.tail;
         this.tail = newHead.next;
         newHead.next = null;
@@ -78,22 +96,9 @@ class Snake implements renderable {
                 this.grow();
                 TREASURES.splice(TREASURES.findIndex((v) => v === t), 1);
 
-                let newPos: [number, number] = [-1, -1];
-                let blocked = true;
-                while (blocked) {
-                    blocked = false;
+                let newPos: [number, number] = [randInt(GRID.width - 1), randInt(GRID.height - 1)];
+                while (this.blocksTile(newPos)) {
                     newPos = [randInt(GRID.width - 1), randInt(GRID.height - 1)];
-
-                    let next = this.tail;
-                    while (next !== null) {
-                        if (next.pos[0] == newPos[0] && next.pos[1] == newPos[1]) {
-                            blocked = true;
-                            next = null;
-                            break;
-                        }
-
-                        next = next.next;
-                    }
                 }
                 new Treasure(newPos, TreasureType.APPLE);
                 break;

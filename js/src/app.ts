@@ -23,9 +23,9 @@ const GRID: Grid = {
     player: null,
 };
 
-const OBJECTS: renderable[] = [];
-const TREASURES: Treasure[] = [];
-const SNAKES: renderable[] = [];
+var OBJECTS: renderable[] = [];
+var TREASURES: Treasure[] = [];
+var SNAKES: renderable[] = [];
 
 function init() {
     GRID.player = new Snake();
@@ -46,6 +46,14 @@ function updateFrames() {
     renderPlayers();
 
     window.requestAnimationFrame(updateFrames);
+}
+
+function reset() {
+    OBJECTS = [];
+    TREASURES = [];
+    SNAKES = [];
+
+    init();
 }
 
 init();

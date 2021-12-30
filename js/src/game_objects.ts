@@ -90,6 +90,7 @@ class Snake implements renderable {
                             console.log("blocked");
                             blocked = true;
                             next = null;
+                            break;
                         }
 
                         next = next.next;

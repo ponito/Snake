@@ -82,7 +82,7 @@ class Snake implements renderable {
                 let blocked = true;
                 while (blocked) {
                     blocked = false;
-                    newPos = [randInt(GRID.width), randInt(GRID.height)];
+                    newPos = [randInt(GRID.width - 1), randInt(GRID.height - 1)];
 
                     let next = this.tail;
                     while (next !== null) {

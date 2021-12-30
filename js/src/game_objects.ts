@@ -87,8 +87,6 @@ class Snake implements renderable {
     }
 
     render(): void {
-        let abc;
-
         draw.color = "dodgerblue";
         switch(this.tail.direction) {
             case Direction.UP:
@@ -105,6 +103,27 @@ class Snake implements renderable {
                     break;
         }
 
+        let next = this.tail.next;
+        while(next !== this.head) {
+            draw.Rectangle(100, 100, next.pos);
+
+            next = next.next;
+        }
+
+        switch(this.head.direction) {
+            case Direction.UP:
+                    draw.Rectangle(50, 75, [this.head.pos[0] + 0.25, this.head.pos[1] + 0.25]);
+                    break;
+            case Direction.DOWN:
+                    draw.Rectangle(50, 75, [this.head.pos[0] + 0.25, this.head.pos[1]])
+                    break;
+            case Direction.LEFT:
+                    draw.Rectangle(75, 50, [this.head.pos[0] + 0.25, this.head.pos[1] + 0.25])
+                    break;
+            case Direction.RIGHT:
+                    draw.Rectangle(75, 50, [this.head.pos[0], this.head.pos[1] + 0.25])
+                    break;
+        }
     }
 }
 

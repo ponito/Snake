@@ -1,39 +1,43 @@
-type Grid = {
-    width: number
-    height: number
-    cell_width: number
-    cell_height: number
-    player: Snake
-}
-
 type Position = [number, number]
+type Offset = [number, number]
+type Quarter = 'top-left' | 'top-right' | 'bot-left' | 'bot-right'
 
-interface renderable {
-    render(): void;
+// rendering types
+
+interface renderable { render(): void }
+
+interface GameObject extends renderable {
+    pos: Position
+
+    onCollision(other: Snake, world: Grid): any
 }
 
-interface SnakeGameEvent {
+// event types
+
+interface GridEvent {
     target: Snake,
-    type: keyof SnakeGameEvent,
+    type: keyof GridEventMap,
 }
 
-interface AteFoodEvent extends SnakeGameEvent {
+interface AteFoodEvent extends GridEvent {
+    eaten: Apple
     // ...
 }
 
-interface PlayerDeathEvent extends SnakeGameEvent {
+interface PlayerDeathEvent extends GridEvent {
     // ...
 }
 
-interface SnakeGameEventMap {
+interface DirectionChangeEvent extends GridEvent {
+    
+}
+
+interface GridEventMap {
     'atefood': AteFoodEvent,
     'playerdied': PlayerDeathEvent,
+    'directionchange': DirectionChangeEvent,
 }
 
-interface SnakeGameEventListener<T extends SnakeGameEvent> {
-    (ev: T): any
+interface GridEventListener<T extends GridEvent> {
+    (this: Grid, ev: T): any
 }
-
-declare function addEventListener<K extends keyof SnakeGameEventMap>(type: K, listener: (ev: SnakeGameEventMap[K]) => any): void
-declare function removeEventListener<K extends keyof SnakeGameEventMap>(type: K, listener: (ev: SnakeGameEventMap[K]) => any): void
-declare function dispatchEvent(event: SnakeGameEvent): void

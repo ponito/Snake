@@ -1,50 +1,83 @@
-const GRID: Grid = {
-    width: 15,
-    height: 15,
-    cell_width: canvas.width / 15,
-    cell_height: canvas.height / 15,
-    player: null,
-};
+const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext('2d');
 
-let OBJECTS: renderable[] = [];
-let TREASURES: Treasure[] = [];
-let SNAKES: renderable[] = [];
+class Grid {
+    width: number
+    height: number
+    cell_size: number
+
+    objects: GameObject[];
+    snakes: renderable[];
+
+    player: Snake
+
+    constructor(width: number, height: number) {
+        this.width = width;
+        this.height = height;
+        this.cell_size = canvas.width / width;
+    }
+
+    reset() {
+        this.objects = []
+        this.snakes = []
+
+        this.snakes.push(this.player = new Snake());
+        this.objects.push(new Apple([
+            floor(this.width / 2),
+            floor(this.height / 2) - 2
+        ]));
+    }
+
+    listeners = {
+        'atefood': [],
+        'playerdied': [],
+        'directionchange': []
+    }
+
+    addEventListener<K extends keyof GridEventMap>(type: K, listener: GridEventListener<GridEventMap[K]>) {
+        this.listeners[type].push(listener);
+        return listener;
+    }
+
+    removeEventListener<K extends keyof GridEventMap>(type: K, listener: GridEventListener<GridEventMap[K]>): void {
+        const i = this.listeners[type].findIndex(l => l === listener);
+        this.listeners[type].slice(i, i + 1);
+    }
+
+    dispatchEvent(event: GridEvent): void {
+        const ls: ((this: Grid, ev: GridEvent) => any)[] = this.listeners[event.type]
+        ls.forEach(l => l.call(GRID, event));
+    }
+}
 
 function init() {
-    GRID.player = new Snake();
+    GRID.reset();
 
-    SNAKES.push(GRID.player);
-    new Treasure([floor(GRID.width / 2), floor(GRID.height / 2) - 2]);
+    window.addEventListener('keydown', GRID.player.controller);
 
-    window.addEventListener('keydown', onKeydown);
+    GRID.addEventListener('atefood', (ev) => {
+        const i = GRID.objects.findIndex((v: GameObject) => v === ev.eaten);
+        GRID.objects.splice(i, i + 1);
+
+        let newPos: Position = [randInt(GRID.width - 1), randInt(GRID.height - 1)];
+        while (ev.target.blocksTile(newPos)) {
+            newPos = [randInt(GRID.width - 1), randInt(GRID.height - 1)];
+        }
+        GRID.objects.push(new Apple(newPos));
+    });
+
+    GRID.addEventListener('playerdied', () => GRID.reset());
 
     this.movement = setInterval(() => {
         GRID.player.move();
     }, 250);
 
-    theatorFit();
+    refit();
+
+    ctx.beginPath();
 };
 
-function updateFrames() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    renderBackground();
-    renderObjects();
-    renderPlayers();
-
-    window.requestAnimationFrame(updateFrames);
-}
-
-function reset() {
-    OBJECTS = [];
-    TREASURES = [];
-    SNAKES = [];
-
-
-    GRID.player = new Snake();
-    SNAKES.push(GRID.player);
-    new Treasure([floor(GRID.width / 2), floor(GRID.height / 2) - 2]);
-}
+const GRID = new Grid(15, 15);
 
 init();
 updateFrames();

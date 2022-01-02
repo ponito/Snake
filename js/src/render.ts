@@ -1,18 +1,10 @@
-const canvas = document.querySelector('canvas');
-const ctx = canvas.getContext('2d');
-const canvasDims = { width: 600, height: 600 };
-const aspectRatio = canvasDims.height / canvasDims.width;
+const refit = window.onresize = () => {
+    const height = (GRID.height / GRID.width) * window.innerWidth
 
-const theatorFit = window.onresize = () => {
-    let dims = {
-        width: window.innerWidth,
-        height: aspectRatio * window.innerWidth
-    };
-
-    if (window.innerHeight > dims.height) {
+    if (window.innerHeight > height) {
         canvas.style.width = "100%";
         canvas.style.height = "initial";
-        canvas.style.top = `calc(50% - ${dims.height + "px"}/2)`;
+        canvas.style.top = `calc(50% - ${height + "px"}/2)`;
     } else {
         canvas.style.height = "100%";
         canvas.style.width = "initial";
@@ -20,7 +12,7 @@ const theatorFit = window.onresize = () => {
     }
 }
 
-function renderBackground() {
+const renderBackground = () => {
     draw.color = 'seagreen';
     draw.fill = false;
     for (let x = 0; x < GRID.width; x++) {
@@ -33,9 +25,17 @@ function renderBackground() {
     ctx.stroke();
 };
 
-const renderObjects = () => {
-    OBJECTS.forEach(o => o.render());
-    TREASURES.forEach(t => t.render());
-};
+const renderBaubles = () => GRID.objects.forEach(b => b.render());
 
-const renderPlayers = () => SNAKES.forEach(s => s.render());
+const renderPlayers = () => GRID.snakes.forEach(s => s.render());
+
+const updateFrames = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    renderBackground();
+    renderBaubles();
+    renderPlayers();
+    // renderHUD();
+
+    window.requestAnimationFrame(updateFrames);
+}
